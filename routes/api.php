@@ -19,4 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('v1/schools', SchoolController::class);
+Route::apiResource('v1/schools', SchoolController::class)->whereUuid('school');

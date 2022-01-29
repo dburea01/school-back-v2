@@ -13,7 +13,7 @@ class UpdateSchoolRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class UpdateSchoolRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'country_id' => 'size:2',
+            'max_users' => 'int|gt:0',
+            'status' => 'in:ACTIVE,INACTIVE',
         ];
     }
 }

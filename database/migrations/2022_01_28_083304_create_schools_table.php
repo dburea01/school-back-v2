@@ -14,7 +14,7 @@ class CreateSchoolsTable extends Migration
     public function up(): void
     {
         Schema::create('schools', function (Blueprint $table): void {
-            $table->uuid('id');
+            $table->uuid('id')->primary();
             $table->string('name', 100);
             $table->string('address1')->nullable();
             $table->string('address2')->nullable();
@@ -30,15 +30,14 @@ class CreateSchoolsTable extends Migration
             $table->timestamps();
             $table->string('created_by');
             $table->string('updated_by')->nullable();
-            $table->primary('id');
         });
 
         /*
-        Schema::table('schools', function (Blueprint $table): void {
-            $table->foreign('country_id')->references('id')->on('countries')->onDelete('set null');
-            $table->foreign('school_type_id')->references('id')->on('school_types')->onDelete('set null');
-        });
-        */
+          Schema::table('schools', function (Blueprint $table): void {
+          $table->foreign('country_id')->references('id')->on('countries')->onDelete('set null');
+          $table->foreign('school_type_id')->references('id')->on('school_types')->onDelete('set null');
+          });
+         */
     }
 
     /**

@@ -24,19 +24,9 @@ class SchoolController extends Controller
      */
     public function index()
     {
-        $schools = $this->schoolRepository->all();
+        $schools = $this->schoolRepository->index();
 
         return SchoolResource::collection($schools);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -47,7 +37,13 @@ class SchoolController extends Controller
      */
     public function store(StoreSchoolRequest $request)
     {
-        //
+        try {
+            $school = $this->schoolRepository->insert($request->all());
+
+            return new SchoolResource($school);
+        } catch (\Throwable $t) {
+            return response()->json('bad request :' . $t->getMessage(), 400);
+        }
     }
 
     /**
@@ -58,18 +54,7 @@ class SchoolController extends Controller
      */
     public function show(School $school)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\School  $school
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(School $school)
-    {
-        //
+        return new SchoolResource($this->schoolRepository->get($school->id));
     }
 
     /**
@@ -81,7 +66,13 @@ class SchoolController extends Controller
      */
     public function update(UpdateSchoolRequest $request, School $school)
     {
-        //
+        try {
+            $updatedSchool = $this->schoolRepository->update($school, $request->all());
+
+            return new SchoolResource($updatedSchool);
+        } catch (Throwable $e) {
+            return response()->json('Bad request : ' . $e->getMessage());
+        }
     }
 
     /**
@@ -92,6 +83,12 @@ class SchoolController extends Controller
      */
     public function destroy(School $school)
     {
-        //
+        try {
+            $this->schoolRepository->delete($school);
+
+            return response()->noContent();
+        } catch (Throwable $t) {
+            return response()->json('Bad request : ' . $t->getMessage());
+        }
     }
 }

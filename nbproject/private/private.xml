@@ -4,7 +4,13 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/Workspace/school-back-v2/app/Repositories/SchoolRepository.php</file>
+            <file>file:/D:/Workspace/school-back-v2/routes/api.php</file>
+            <file>file:/D:/Workspace/school-back-v2/database/migrations/2022_01_28_083304_create_schools_table.php</file>
+            <file>file:/D:/Workspace/school-back-v2/tests/Feature/SchoolTest.php</file>
             <file>file:/D:/Workspace/school-back-v2/app/Http/Controllers/SchoolController.php</file>
+            <file>file:/D:/Workspace/school-back-v2/app/Http/Requests/UpdateSchoolRequest.php</file>
+            <file>file:/D:/Workspace/school-back-v2/tests/Feature/Request.php</file>
+            <file>file:/D:/Workspace/school-back-v2/app/Http/Requests/StoreSchoolRequest.php</file>
         </group>
     </open-files>
 </project-private>
