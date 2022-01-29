@@ -11,9 +11,11 @@ class SchoolTest extends TestCase {
     use RefreshDatabase;
     use Request;
 
+    const RESOURCE = 'schools';
+
     public function test_get_schools() {
         School::factory()->count(3)->create();
-        $response = $this->getJson($this->getEndPoint() . '/schools');
+        $response = $this->getJson($this->getEndPoint() . self::RESOURCE);
 
         $response->assertStatus(200);
 
@@ -24,7 +26,7 @@ class SchoolTest extends TestCase {
     public function test_get_schools_filter_by_name_without_response() {
         School::factory()->count(3)->create();
 
-        $response = $this->getJson($this->getEndPoint() . '/schools?filter[name]=Test');
+        $response = $this->getJson($this->getEndPoint() . self::RESOURCE . '?filter[name]=Test');
         $response->assertStatus(200);
 
         $data = json_decode($response->getContent(), true)['data'];
@@ -34,7 +36,7 @@ class SchoolTest extends TestCase {
     public function test_get_schools_filter_by_name_with_response() {
         School::factory()->count(3)->create();
         School::factory()->create(['name' => 'Test']);
-        $response = $this->getJson($this->getEndPoint() . '/schools?filter[name]=Test');
+        $response = $this->getJson($this->getEndPoint() . self::RESOURCE . '?filter[name]=Test');
         $response->assertStatus(200);
 
         $data = json_decode($response->getContent(), true)['data'];
@@ -45,7 +47,7 @@ class SchoolTest extends TestCase {
         $schoolA = School::factory()->create(['name' => 'a']);
         $schoolB = School::factory()->create(['name' => 'b']);
 
-        $response = $this->getJson($this->getEndPoint() . '/schools?sort=name');
+        $response = $this->getJson($this->getEndPoint() . self::RESOURCE . '?sort=name');
         $response->assertStatus(200);
 
         $data = json_decode($response->getContent(), true)['data'];
@@ -57,7 +59,7 @@ class SchoolTest extends TestCase {
         $schoolA = School::factory()->create(['name' => 'a']);
         $schoolB = School::factory()->create(['name' => 'b']);
 
-        $response = $this->getJson($this->getEndPoint() . '/schools?sort=-name');
+        $response = $this->getJson($this->getEndPoint() . self::RESOURCE . '?sort=-name');
         $response->assertStatus(200);
 
         $data = json_decode($response->getContent(), true)['data'];
@@ -69,7 +71,7 @@ class SchoolTest extends TestCase {
         $schoolA = School::factory()->create(['max_users' => '1']);
         $schoolB = School::factory()->create(['max_users' => '2']);
 
-        $response = $this->getJson($this->getEndPoint() . '/schools?sort=-max_users');
+        $response = $this->getJson($this->getEndPoint() . self::RESOURCE . '?sort=-max_users');
         $response->assertStatus(200);
 
         $data = json_decode($response->getContent(), true)['data'];
@@ -79,7 +81,7 @@ class SchoolTest extends TestCase {
 
     public function test_get_schools_some_fields() {
         School::factory()->count(3)->create();
-        $response = $this->getJson($this->getEndPoint() . '/schools?fields=id,name');
+        $response = $this->getJson($this->getEndPoint() . self::RESOURCE . '?fields=id,name');
 
         $response->assertStatus(200)
                 ->assertJsonStructure([
@@ -94,7 +96,7 @@ class SchoolTest extends TestCase {
 
     public function test_get_school() {
         $school = School::factory()->create();
-        $response = $this->getJson($this->getEndPoint() . '/schools/' . $school->id);
+        $response = $this->getJson($this->getEndPoint() . self::RESOURCE . '/' . $school->id);
 
         $response->assertStatus(200)
                 ->assertJsonStructure([
@@ -104,7 +106,7 @@ class SchoolTest extends TestCase {
 
     public function test_get_school_with_some_fields() {
         $school = School::factory()->create();
-        $response = $this->getJson($this->getEndPoint() . '/schools/' . $school->id . '?fields[schools]=id,name');
+        $response = $this->getJson($this->getEndPoint() . self::RESOURCE . '/' . $school->id . '?fields[schools]=id,name');
 
         $response->assertStatus(200)
                 ->assertJsonStructure([
@@ -117,22 +119,22 @@ class SchoolTest extends TestCase {
 
     public function test_get_school_with_a_not_allowed_field_must_return_400() {
         $school = School::factory()->create();
-        $response = $this->getJson($this->getEndPoint() . '/schools/' . $school->id . '?fields[schools]=id,name,fake');
+        $response = $this->getJson($this->getEndPoint() . self::RESOURCE . '/' . $school->id . '?fields[schools]=id,name,fake');
         $response->assertStatus(400);
     }
 
     public function test_get_school_with_not_uuid_must_return_404() {
-        $response = $this->getJson($this->getEndPoint() . '/schools/123');
+        $response = $this->getJson($this->getEndPoint() . self::RESOURCE . '/123');
         $response->assertStatus(404);
     }
 
     public function test_get_school_with_an_unknown_school_must_return_404() {
-        $response = $this->getJson($this->getEndPoint() . '/schools/123e4567-e89b-12d3-a456-426614174000');
+        $response = $this->getJson($this->getEndPoint() . self::RESOURCE . '/123e4567-e89b-12d3-a456-426614174000');
         $response->assertStatus(404);
     }
 
     public function test_post_school_without_body_must_return_422_with_the_list_of_errors() {
-        $response = $this->postJson($this->getEndPoint() . '/schools');
+        $response = $this->postJson($this->getEndPoint() . self::RESOURCE);
         $response->assertStatus(422)
                 ->assertJsonStructure([
                     'message',
@@ -160,7 +162,7 @@ class SchoolTest extends TestCase {
             'max_users' => '123',
             'status' => 'ACTIVE',
         ];
-        $response = $this->postJson($this->getEndPoint() . '/schools', $data);
+        $response = $this->postJson($this->getEndPoint() . self::RESOURCE, $data);
         $response->assertStatus(201);
 
         $createdSchoolId = json_decode($response->getContent(), true)['data']['id'];
@@ -170,7 +172,7 @@ class SchoolTest extends TestCase {
     }
 
     public function test_put_unknown_school_must_return_404() {
-        $response = $this->putJson($this->getEndPoint() . '/schools/123e4567-e89b-12d3-a456-426614174000');
+        $response = $this->putJson($this->getEndPoint() . self::RESOURCE . '/123e4567-e89b-12d3-a456-426614174000');
         $response->assertStatus(404);
     }
 
@@ -180,7 +182,7 @@ class SchoolTest extends TestCase {
         ];
 
         $school = School::factory()->create();
-        $response = $this->putJson($this->getEndPoint() . '/schools/' . $school->id, $data);
+        $response = $this->putJson($this->getEndPoint() . self::RESOURCE . '/' . $school->id, $data);
 
         $response->assertStatus(422)
                 ->assertJsonStructure([
@@ -205,7 +207,7 @@ class SchoolTest extends TestCase {
         ];
 
         $school = School::factory()->create();
-        $response = $this->putJson($this->getEndPoint() . '/schools/' . $school->id, $data);
+        $response = $this->putJson($this->getEndPoint() . self::RESOURCE . '/' . $school->id, $data);
 
         $response->assertStatus(200);
 
@@ -216,13 +218,13 @@ class SchoolTest extends TestCase {
     }
 
     public function test_delete_unknown_school_must_return_404() {
-        $response = $this->deleteJson($this->getEndPoint() . '/schools/unknown');
+        $response = $this->deleteJson($this->getEndPoint() . self::RESOURCE . '/unknown');
         $response->assertStatus(404);
     }
 
     public function test_delete_school_must_return_204_and_the_school_is_deleted() {
         $school = School::factory()->create();
-        $response = $this->deleteJson($this->getEndPoint() . '/schools/' . $school->id);
+        $response = $this->deleteJson($this->getEndPoint() . self::RESOURCE . '/' . $school->id);
         $response->assertStatus(204);
 
         $schoolDeleted = School::find($school->id);

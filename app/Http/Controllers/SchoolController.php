@@ -8,12 +8,11 @@ use App\Http\Resources\SchoolResource;
 use App\Models\School;
 use App\Repositories\SchoolRepository;
 
-class SchoolController extends Controller
-{
+class SchoolController extends Controller {
+
     private $schoolRepository;
 
-    public function __construct(SchoolRepository $schoolRepository)
-    {
+    public function __construct(SchoolRepository $schoolRepository) {
         $this->schoolRepository = $schoolRepository;
     }
 
@@ -22,8 +21,7 @@ class SchoolController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         $schools = $this->schoolRepository->index();
 
         return SchoolResource::collection($schools);
@@ -35,8 +33,7 @@ class SchoolController extends Controller
      * @param  \App\Http\Requests\StoreSchoolRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreSchoolRequest $request)
-    {
+    public function store(StoreSchoolRequest $request) {
         try {
             $school = $this->schoolRepository->insert($request->all());
 
@@ -52,8 +49,7 @@ class SchoolController extends Controller
      * @param  \App\Models\School  $school
      * @return \Illuminate\Http\Response
      */
-    public function show(School $school)
-    {
+    public function show(School $school) {
         return new SchoolResource($this->schoolRepository->get($school->id));
     }
 
@@ -64,13 +60,12 @@ class SchoolController extends Controller
      * @param  \App\Models\School  $school
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSchoolRequest $request, School $school)
-    {
+    public function update(UpdateSchoolRequest $request, School $school) {
         try {
             $updatedSchool = $this->schoolRepository->update($school, $request->all());
 
             return new SchoolResource($updatedSchool);
-        } catch (Throwable $e) {
+        } catch (\Throwable $e) {
             return response()->json('Bad request : ' . $e->getMessage());
         }
     }
@@ -81,14 +76,14 @@ class SchoolController extends Controller
      * @param  \App\Models\School  $school
      * @return \Illuminate\Http\Response
      */
-    public function destroy(School $school)
-    {
+    public function destroy(School $school) {
         try {
             $this->schoolRepository->delete($school);
 
             return response()->noContent();
-        } catch (Throwable $t) {
+        } catch (\Throwable $t) {
             return response()->json('Bad request : ' . $t->getMessage());
         }
     }
+
 }

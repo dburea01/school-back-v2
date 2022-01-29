@@ -6,13 +6,12 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSchoolsTable extends Migration
-{
+class CreateSchoolsTable extends Migration {
+
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
+    public function up(): void {
         Schema::create('schools', function (Blueprint $table): void {
             $table->uuid('id')->primary();
             $table->string('name', 100);
@@ -24,27 +23,18 @@ class CreateSchoolsTable extends Migration
             $table->string('country_id', 2);
             $table->string('comment')->nullable();
             $table->string('status');
-            //$table->string('school_type_id', 10);
-            //$table->string('school_status', 10);
             $table->integer('max_users');
             $table->timestamps();
             $table->string('created_by');
             $table->string('updated_by')->nullable();
         });
-
-        /*
-          Schema::table('schools', function (Blueprint $table): void {
-          $table->foreign('country_id')->references('id')->on('countries')->onDelete('set null');
-          $table->foreign('school_type_id')->references('id')->on('school_types')->onDelete('set null');
-          });
-         */
     }
 
     /**
      * Reverse the migrations.
      */
-    public function down(): void
-    {
+    public function down(): void {
         Schema::dropIfExists('schools');
     }
+
 }
