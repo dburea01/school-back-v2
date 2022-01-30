@@ -118,7 +118,7 @@ class SchoolTest extends TestCase
         $response->assertStatus(404);
     }
 
-    /** a comm*/
+    /** a com*/
     public function test_get_school_with_an_unknown_school_must_return_404()
     {
         $response = $this->getJson($this->getEndPoint() . self::RESOURCE . '/123e4567-e89b-12d3-a456-426614174000');
