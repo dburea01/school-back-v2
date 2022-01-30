@@ -22,7 +22,7 @@ class RoleResource extends JsonResource
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
-            'updated_by' => $this->updated_by
+            'updated_by' => $this->updated_by,
         ];
     }
 }

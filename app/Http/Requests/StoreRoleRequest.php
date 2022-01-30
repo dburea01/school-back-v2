@@ -25,7 +25,7 @@ class StoreRoleRequest extends FormRequest
     {
         return [
             // 'school_id' => 'required|uuid|exists:schools,id',
-            'name' => 'required'
+            'name' => 'required',
         ];
     }
 }

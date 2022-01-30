@@ -9,8 +9,6 @@ use App\Models\School;
 
 class RoleRepository
 {
-
-
     public function update(Role $role, array $data): Role
     {
         $role->fill($data);
