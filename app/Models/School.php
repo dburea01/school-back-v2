@@ -31,4 +31,9 @@ class School extends Model
     {
         $this->attributes['country_id'] = strtoupper($value);
     }
+
+    public function roles()
+    {
+        return $this->hasMany(Role::class);
+    }
 }

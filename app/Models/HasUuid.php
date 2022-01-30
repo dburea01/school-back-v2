@@ -20,9 +20,7 @@ trait HasUuid
         });
 
         static::updating(function ($model) {
-            if (Auth::check()) {
-                $model->updated_by = Auth::user()->id;
-            }
+            $model->updated_by = Auth::check() ? Auth::user()->full_name : '?';
         });
     }
 }

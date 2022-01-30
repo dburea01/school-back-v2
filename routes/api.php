@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SchoolController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('v1/schools', SchoolController::class)->whereUuid('school');
+Route::apiResource('v1/schools/{school}/roles', RoleController::class)->scoped()->whereUuid(['school', 'role']);
