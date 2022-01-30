@@ -29,8 +29,6 @@ class RoleController extends Controller
             $role = $this->roleRepository->insert($school, $request->all());
 
             return new RoleResource($role);
-
-            return new RoleResource($role);
         } catch (\Throwable $th) {
             return response()->json('bad request :' . $th->getMessage(), 400);
         }
