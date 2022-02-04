@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
-    use HasFactory, HasUuid;
+    use HasFactory;
 
     public $incrementing = false;
 
@@ -15,13 +15,6 @@ class Role extends Model
 
     protected $fillable =
     [
-        'school_id',
         'name',
-        'comment',
     ];
-
-    public function school()
-    {
-        return $this->belongsTo(School::class);
-    }
 }

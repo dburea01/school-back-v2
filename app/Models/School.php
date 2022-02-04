@@ -32,8 +32,8 @@ class School extends Model
         $this->attributes['country_id'] = strtoupper($value);
     }
 
-    public function roles()
+    public function users()
     {
-        return $this->hasMany(Role::class);
+        return $this->hasMany(User::class);
     }
 }
