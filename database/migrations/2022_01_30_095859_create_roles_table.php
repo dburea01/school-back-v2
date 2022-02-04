@@ -22,40 +22,48 @@ class CreateRolesTable extends Migration
             $table->timestamps();
         });
 
-        $role = new Role();
-        $role->id = 'TEACHER';
-        $role->position = 10;
-        $role->displayable = true;
-        $role->name = 'Enseignant';
-        $role->save();
+        $roles = [
 
-        $role = new Role();
-        $role->id = 'STUDENT';
-        $role->position = 20;
-        $role->displayable = true;
-        $role->name = 'Etudiant';
-        $role->save();
+            'TEACHER' => [
+                'id' => 'TEACHER',
+                'position' => 10,
+                'displayable' => true,
+                'name' => 'Enseignant'
+            ],
 
-        $role = new Role();
-        $role->id = 'PARENT';
-        $role->position = 30;
-        $role->displayable = true;
-        $role->name = 'Parent';
-        $role->save();
+            'STUDENT' => [
+                'id' => 'STUDENT',
+                'position' => 20,
+                'displayable' => true,
+                'name' => 'Etudiant'
+            ],
 
-        $role = new Role();
-        $role->id = 'DIRECTOR';
-        $role->position = 40;
-        $role->displayable = true;
-        $role->name = 'Directeur';
-        $role->save();
+            'PARENT' => [
+                'id' => 'PARENT',
+                'position' => 30,
+                'displayable' => true,
+                'name' => 'Parent'
+            ],
 
-        $role = new Role();
-        $role->id = 'SUPERADMIN';
-        $role->position = 50;
-        $role->displayable = false;
-        $role->name = 'Super Administrateur';
-        $role->save();
+            'DIRECTOR' => [
+                'id' => 'DIRECTOR',
+                'position' => 40,
+                'displayable' => true,
+                'name' => 'Directeur'
+            ],
+
+            'SUPERADMIN' => [
+                'id' => 'SUPERADMIN',
+                'position' => 50,
+                'displayable' => false,
+                'name' => 'Super Admin'
+            ],
+
+        ];
+
+        foreach ($roles as $role) {
+            Role::create($role);
+        }
     }
 
     /**
