@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SchoolController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,9 +17,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('v1/login', [AuthController::class, 'login']);
 
-Route::apiResource('v1/schools', SchoolController::class)->whereUuid('school');
-Route::apiResource('v1/schools/{school}/users', UserController::class)->scoped()->whereUuid(['school', 'user']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('v1/logout', [AuthController::class, 'logout']);
+
+    Route::apiResource('v1/schools', SchoolController::class)->whereUuid('school');
+    Route::apiResource('v1/schools/{school}/users', UserController::class)->scoped()->whereUuid(['school', 'user']);
+});
