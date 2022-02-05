@@ -29,7 +29,7 @@ class StoreUserRequest extends FormRequest
             'first_name' => 'required',
             'birth_date' => 'date_format:d/m/Y',
             'gender_id' => 'required_if:role_id,STUDENT|in:1,2',
-            'status' => 'required|in:ACTIVE,INACTIVE'
+            'status' => 'required|in:ACTIVE,INACTIVE',
         ];
     }
 }

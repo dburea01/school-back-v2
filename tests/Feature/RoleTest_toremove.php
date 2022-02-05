@@ -7,7 +7,7 @@ use App\Models\School;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class RoleTest extends TestCase
+class RoleTest_toremove extends TestCase
 {
     use RefreshDatabase;
     use Request;

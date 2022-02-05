@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 
@@ -35,7 +34,7 @@ class UserFactory extends Factory
             'gender_id' => $this->faker->randomElement(['1', '2']),
             'comment' => $this->faker->paragraphs(3, true),
             'created_by' => 'factory',
-            'email_verified_at' => $this->faker->dateTimeThisYear()
+            'email_verified_at' => $this->faker->dateTimeThisYear(),
         ];
     }
 }

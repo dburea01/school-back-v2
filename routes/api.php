@@ -1,9 +1,8 @@
 <?php
 
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\AuthController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\SchoolController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*

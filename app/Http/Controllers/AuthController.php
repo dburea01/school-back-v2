@@ -18,7 +18,7 @@ class AuthController extends Controller
         $credentials = [
             'email' => $request->email,
             'password' => $request->password,
-            'status' => 'ACTIVE'
+            'status' => 'ACTIVE',
         ];
 
         if (!Auth::attempt($credentials)) {
@@ -33,7 +33,7 @@ class AuthController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Internal server error',
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
             ], 500);
         }
     }

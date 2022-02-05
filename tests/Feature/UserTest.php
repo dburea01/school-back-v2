@@ -5,13 +5,19 @@ namespace Tests\Feature;
 use App\Models\School;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class UserTest extends TestCase
 {
     use RefreshDatabase;
     use Request;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->actingAs($this->createSchoolAndUserWithRole('SUPERADMIN'));
+    }
 
     public function test_get_users_of_a_school()
     {
@@ -24,7 +30,7 @@ class UserTest extends TestCase
             ->assertJsonStructure([
                 'data',
                 'links',
-                'meta'
+                'meta',
             ]);
 
         $data = json_decode($response->getContent(), true)['data'];
@@ -88,7 +94,7 @@ class UserTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure([
-                'data'
+                'data',
             ]);
 
         $data = json_decode($response->getContent(), true)['data'];
@@ -118,7 +124,7 @@ class UserTest extends TestCase
                     'role_id',
                     'last_name',
                     'first_name',
-                    'status'
+                    'status',
                 ],
             ]);
     }
@@ -139,12 +145,11 @@ class UserTest extends TestCase
             'country_id' => 'FR',
             'status' => 'INACTIVE',
             'birth_date' => '18/10/1992',
-            'gender_id' => '1'
+            'gender_id' => '1',
         ];
 
         $response = $this->postJson($this->getEndPoint() . "schools/$school->id/users", $userToPost);
         $response->assertStatus(201);
-
 
         $data = json_decode($response->getContent(), true)['data'];
         $userCreated = User::find($data['id']);
@@ -168,12 +173,11 @@ class UserTest extends TestCase
             'country_id' => 'BE',
             'status' => 'INACTIVE',
             'birth_date' => '27/11/1997',
-            'gender_id' => '2'
+            'gender_id' => '2',
         ];
 
         $response = $this->putJson($this->getEndPoint() . "schools/$school->id/users/$user->id", $userToPut);
         $response->assertStatus(200);
-
 
         $data = json_decode($response->getContent(), true)['data'];
         $userUpdated = User::find($data['id']);

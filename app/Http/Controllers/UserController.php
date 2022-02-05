@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\School;
 use App\Models\User;
 use App\Repositories\UserRepository;
-use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -17,11 +15,13 @@ class UserController extends Controller
     public function __construct(UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
+        $this->authorizeResource(User::class);
     }
 
     public function index(School $school)
     {
         $users = $this->userRepository->index($school);
+
         return UserResource::collection($users);
     }
 
@@ -38,7 +38,6 @@ class UserController extends Controller
 
     public function show(School $school, User $user)
     {
-
         return new UserResource($user);
     }
 

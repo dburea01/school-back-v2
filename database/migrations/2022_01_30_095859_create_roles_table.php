@@ -28,35 +28,35 @@ class CreateRolesTable extends Migration
                 'id' => 'TEACHER',
                 'position' => 10,
                 'displayable' => true,
-                'name' => 'Enseignant'
+                'name' => 'Enseignant',
             ],
 
             'STUDENT' => [
                 'id' => 'STUDENT',
                 'position' => 20,
                 'displayable' => true,
-                'name' => 'Etudiant'
+                'name' => 'Etudiant',
             ],
 
             'PARENT' => [
                 'id' => 'PARENT',
                 'position' => 30,
                 'displayable' => true,
-                'name' => 'Parent'
+                'name' => 'Parent',
             ],
 
             'DIRECTOR' => [
                 'id' => 'DIRECTOR',
                 'position' => 40,
                 'displayable' => true,
-                'name' => 'Directeur'
+                'name' => 'Directeur',
             ],
 
             'SUPERADMIN' => [
                 'id' => 'SUPERADMIN',
                 'position' => 50,
                 'displayable' => false,
-                'name' => 'Super Admin'
+                'name' => 'Super Admin',
             ],
 
         ];

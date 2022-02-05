@@ -6,7 +6,7 @@ use App\Models\Role;
 use App\Models\School;
 use Illuminate\Database\Seeder;
 
-class RoleSeeder extends Seeder
+class RoleSeeder_toremove extends Seeder
 {
     /**
      * Run the database seeds.

@@ -6,7 +6,6 @@ use App\Http\Requests\StoreSchoolRequest;
 use App\Http\Requests\UpdateSchoolRequest;
 use App\Http\Resources\SchoolResource;
 use App\Models\School;
-use App\Policies\SchoolPolicy;
 use App\Repositories\SchoolRepository;
 
 class SchoolController extends Controller
@@ -16,7 +15,7 @@ class SchoolController extends Controller
     public function __construct(SchoolRepository $schoolRepository)
     {
         $this->schoolRepository = $schoolRepository;
-        $this->authorizeResource(School::class, 'school');
+        $this->authorizeResource(School::class);
     }
 
     public function index()
