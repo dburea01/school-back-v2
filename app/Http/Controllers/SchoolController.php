@@ -15,6 +15,7 @@ class SchoolController extends Controller
     public function __construct(SchoolRepository $schoolRepository)
     {
         $this->schoolRepository = $schoolRepository;
+        $this->authorizeResource(School::class);
     }
 
     public function index()

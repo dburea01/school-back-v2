@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\School;
-use Illuminate\Database\Seeder;
 use App\Models\User;
+use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
 {
@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
         User::factory()->create([
             'school_id' => null,
             'role_id' => 'SUPERADMIN',
-            'status' => 'ACTIVE'
+            'status' => 'ACTIVE',
         ]);
 
         // for each school, create 1 director + some teachers
@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
             User::factory()->count(2)->create([
                 'school_id' => $school->id,
                 'role_id' => 'DIRECTOR',
-                'status' => 'ACTIVE'
+                'status' => 'ACTIVE',
             ]);
 
             User::factory()->count(10)->create([
@@ -37,15 +37,14 @@ class UserSeeder extends Seeder
                 'role_id' => 'TEACHER',
             ]);
 
-
             User::factory()->count(10)->create([
                 'school_id' => $school->id,
-                'role_id' => 'PARENT'
+                'role_id' => 'PARENT',
             ]);
 
             User::factory()->count(20)->create([
                 'school_id' => $school->id,
-                'role_id' => 'STUDENT'
+                'role_id' => 'STUDENT',
             ]);
         }
     }

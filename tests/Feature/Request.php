@@ -2,6 +2,9 @@
 
 namespace tests\Feature;
 
+use App\Models\School;
+use App\Models\User;
+
 trait Request
 {
     public function getEndPoint(): string
@@ -15,5 +18,16 @@ trait Request
             'Content-Type' => 'application/json',
             'Authorization' => 'Bearer ' . $token,
         ];
+    }
+
+    public function createSchoolAndUserWithRole(string $roleId): User
+    {
+        $school = School::factory()->create();
+        $user = User::factory()->create([
+            'school_id' => $school->id,
+            'role_id' => $roleId,
+        ]);
+
+        return $user;
     }
 }

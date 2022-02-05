@@ -42,7 +42,6 @@ class UserRepository
 
     public function insert(School $school, array $data): User
     {
-
         $user = new User();
 
         $user->school_id = $school->id;

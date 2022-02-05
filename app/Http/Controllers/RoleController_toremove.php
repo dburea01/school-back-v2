@@ -9,7 +9,7 @@ use App\Models\School;
 use App\Repositories\RoleRepository;
 use Illuminate\Http\Request;
 
-class RoleController extends Controller
+class RoleController_toremove extends Controller
 {
     private $roleRepository;
 
