@@ -8,6 +8,12 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class UserPolicy
 {
     use HandlesAuthorization;
+    protected $school;
+
+    public function __construct()
+    {
+        $this->school = request()->route()->parameter('school');
+    }
 
     public function before(User $user)
     {
@@ -24,7 +30,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->isDirector();
+        return $user->isDirector() && $user->school_id === $this->school->id;
     }
 
     /**
@@ -36,7 +42,7 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-        //
+        return ($user->isDirector || $user->isTeacher) && $user->school_id === $model->school_id && $user->school_id === $this->school->id;
     }
 
     /**
@@ -47,7 +53,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        //
+        return ($user->isDirector) && $user->school_id === $this->school->id;
     }
 
     /**
@@ -59,7 +65,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        //
+        return ($user->isDirector) && $user->school_id === $model->school_id;
     }
 
     /**
@@ -71,7 +77,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        //
+        return ($user->isDirector) && $user->school_id === $model->school_id;
     }
 
     /**

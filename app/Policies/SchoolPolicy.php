@@ -48,7 +48,7 @@ class SchoolPolicy
      */
     public function create(User $user)
     {
-        return $user->isDirector();
+        //
     }
 
     /**
@@ -72,7 +72,7 @@ class SchoolPolicy
      */
     public function delete(User $user, School $school)
     {
-        return $user->isDirector() && $school->id === $user->school_id;
+        // 
     }
 
     /**
