@@ -1,0 +1,1242 @@
+{
+	"info": {
+		"_postman_id": "b73f77e6-42ba-462d-a20e-14f3978598bb",
+		"name": "SchoolV2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Connexion",
+			"item": [
+				{
+					"name": "get cookie",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/sanctum/csrf-cookie",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"sanctum",
+								"csrf-cookie"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login KO",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Status code is 401\"] = responseCode.code === 401;",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{path}}/login",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login OK",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"token\", jsonData.token);",
+									"",
+									"tests[\"Token is generated\"] = jsonData.hasOwnProperty('token');",
+									"tests[\"user is supplied\"] = jsonData.hasOwnProperty('user');"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "chartmann@example.net",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "azerty",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{path}}/login",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"token\", jsonData.access_token);",
+									"",
+									"tests[\"Token is generated\"] = jsonData.hasOwnProperty('access_token');",
+									"tests[\"user id supplied\"] = jsonData.hasOwnProperty('id');",
+									"tests[\"user name id supplied\"] = jsonData.hasOwnProperty('name');"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "buddy.torphy@example.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "azerty",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{path}}/logout",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "School",
+			"item": [
+				{
+					"name": "schools",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{xsrf-cookie}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{path}}/schools",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"schools"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "schools filtered",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{path}}/schools?filter[name]=volu",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"schools"
+							],
+							"query": [
+								{
+									"key": "filter[name]",
+									"value": "volu"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "schools fields",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{path}}/schools?fields[schools]=id,name",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"schools"
+							],
+							"query": [
+								{
+									"key": "fields[schools]",
+									"value": "id,name"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "schools sorted",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{path}}/schools?filter[school]fields=id,name&sort=-max_users",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"schools"
+							],
+							"query": [
+								{
+									"key": "filter[school]fields",
+									"value": "id,name"
+								},
+								{
+									"key": "sort",
+									"value": "-max_users"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "schools filter+sort+fields",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{path}}/schools?filter[name]=a&fields[schools]=id,name,max_users&sort=-max_users",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"schools"
+							],
+							"query": [
+								{
+									"key": "filter[name]",
+									"value": "a"
+								},
+								{
+									"key": "fields[schools]",
+									"value": "id,name,max_users"
+								},
+								{
+									"key": "sort",
+									"value": "-max_users"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "school",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{path}}/schools/123e4567-e89b-12d3-a456-426614174000",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"schools",
+								"123e4567-e89b-12d3-a456-426614174000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "school with errors",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/schools/",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"schools",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "school OK",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"name\": \"name\",\r\n    \"address1\": \"address1\",\r\n\t\"zip_code\" : \"123\",\r\n\t\"city\" : \"city\",\r\n\t\"country_id\" : \"FR\",\r\n\t\"status\" : \"ACTIVE\",\r\n\t\"max_users\" : 123\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/schools",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"schools"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "school with errors",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{path}}/schools/3884416f-8ca1-40aa-923f-fb2c4c81ffcf",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"schools",
+								"3884416f-8ca1-40aa-923f-fb2c4c81ffcf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "school OK",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"name\" : \"modified yyy\",\r\n\t\"zip_code\" : \"123\",\r\n\t\"city\" : \"city\",\r\n\t\"country_id\" : \"FR\",\r\n\t\"school_type_id\" : \"COLLEGE\",\r\n\t\"school_status\" : \"ACTIVE\",\r\n\t\"max_users\" : 123\r\n}",
+							"options": {
+								"raw": {
+									"language": "javascript"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/schools/3884416f-8ca1-40aa-923f-fb2c4c81ffcf",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"schools",
+								"3884416f-8ca1-40aa-923f-fb2c4c81ffcf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "school",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{path}}/schools/55e0dd17-5e32-4d14-963f-1d4b78dbaf80",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"schools",
+								"55e0dd17-5e32-4d14-963f-1d4b78dbaf80"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{path}}/schools/efd3c17a-522f-4d4d-95ea-faf23885eb80/users",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"schools",
+								"efd3c17a-522f-4d4d-95ea-faf23885eb80",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{path}}/schools/07b530be-1ae2-4711-8240-024bbfa99230/users/64060d9d-5acc-4a05-9b5d-f4d6d6f13e51",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"schools",
+								"07b530be-1ae2-4711-8240-024bbfa99230",
+								"users",
+								"64060d9d-5acc-4a05-9b5d-f4d6d6f13e51"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user filtered",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{path}}/schools/07b530be-1ae2-4711-8240-024bbfa99230/users?filter[role_id]=STUDENT",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"schools",
+								"07b530be-1ae2-4711-8240-024bbfa99230",
+								"users"
+							],
+							"query": [
+								{
+									"key": "filter[role_id]",
+									"value": "STUDENT"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user with errors",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/schools/07b530be-1ae2-4711-8240-024bbfa99230/users",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"schools",
+								"07b530be-1ae2-4711-8240-024bbfa99230",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user OK",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"role_id\": \"STUDENT\",\r\n    \"last_name\": \"last name\",\r\n    \"first_name\": \"first name\",\r\n    \"birth_date\": \"19/02/2000\",\r\n    \"gender_id\": \"2\",\r\n    \"address1\": \"address1\",\r\n    \"address2\": \"address2\",\r\n    \"address3\": \"address3\",\r\n\t\"zip_code\" : \"123\",\r\n\t\"city\" : \"city\",\r\n\t\"country_id\" : \"FR\",\r\n\t\"status\" : \"ACTIVE\",\r\n    \"comment\" : \"A comment\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/schools/efd3c17a-522f-4d4d-95ea-faf23885eb80/users",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"schools",
+								"efd3c17a-522f-4d4d-95ea-faf23885eb80",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Group",
+			"item": [
+				{
+					"name": "groups",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{path}}/schools/fbb24c2e-752d-47bb-9c9d-cb5985fd4e76/groups",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"schools",
+								"fbb24c2e-752d-47bb-9c9d-cb5985fd4e76",
+								"groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "groups filtered",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{path}}/schools/fbb24c2e-752d-47bb-9c9d-cb5985fd4e76/groups?filter[name]=excep",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"schools",
+								"fbb24c2e-752d-47bb-9c9d-cb5985fd4e76",
+								"groups"
+							],
+							"query": [
+								{
+									"key": "filter[name]",
+									"value": "excep"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "group",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{path}}/schools/fbb24c2e-752d-47bb-9c9d-cb5985fd4e76/groups/dda9f284-de30-4b6f-b732-b62d24ecc7bb",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"schools",
+								"fbb24c2e-752d-47bb-9c9d-cb5985fd4e76",
+								"groups",
+								"dda9f284-de30-4b6f-b732-b62d24ecc7bb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "group with errors",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/schools/fbb24c2e-752d-47bb-9c9d-cb5985fd4e76/groups",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"schools",
+								"fbb24c2e-752d-47bb-9c9d-cb5985fd4e76",
+								"groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "group OK",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"group name\",\r\n    \"address1\": \"address1\",\r\n    \"address2\": \"address2\",\r\n    \"address3\": \"address3\",\r\n    \"zip_code\": \"123\",\r\n    \"city\": \"city\",\r\n    \"country_id\": \"FR\",\r\n    \"status\": \"ACTIVE\",\r\n    \"comment\": \"A comment\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/schools/fbb24c2e-752d-47bb-9c9d-cb5985fd4e76/groups",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"schools",
+								"fbb24c2e-752d-47bb-9c9d-cb5985fd4e76",
+								"groups"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Role",
+			"item": [
+				{
+					"name": "roles",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{xsrf-cookie}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{path}}/schools/958063f2-75d8-46d9-935d-88cb91a484e7/roles/061c8ac9-663f-4976-aaa6-ce7ed3cbe782",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"schools",
+								"958063f2-75d8-46d9-935d-88cb91a484e7",
+								"roles",
+								"061c8ac9-663f-4976-aaa6-ce7ed3cbe782"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "role",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{xsrf-cookie}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{path}}/schools/958063f2-75d8-46d9-935d-88cb91a484e7/roles",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"schools",
+								"958063f2-75d8-46d9-935d-88cb91a484e7",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "role OK",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"name\": \"name\",\r\n    \"comment\": \"comment\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/schools/958063f2-75d8-46d9-935d-88cb91a484e7/roles",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"schools",
+								"958063f2-75d8-46d9-935d-88cb91a484e7",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "role OK",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"name\": \"name modified er r\",\r\n    \"comment\": \"comment modified\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/schools/958063f2-75d8-46d9-935d-88cb91a484e7/roles/3e651107-591e-4202-b1e5-f1bb0e613be7",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"schools",
+								"958063f2-75d8-46d9-935d-88cb91a484e7",
+								"roles",
+								"3e651107-591e-4202-b1e5-f1bb0e613be7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "role OK",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"name\": \"name modified er\",\r\n    \"comment\": \"comment modified\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/schools/958063f2-75d8-46d9-935d-88cb91a484e7/roles/3e651107-591e-4202-b1e5-f1bb0e613be7",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"schools",
+								"958063f2-75d8-46d9-935d-88cb91a484e7",
+								"roles",
+								"3e651107-591e-4202-b1e5-f1bb0e613be7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
