@@ -23,11 +23,9 @@ trait Request
     public function createSchoolAndUserWithRole(string $roleId): User
     {
         $school = School::factory()->create();
-        $user = User::factory()->create([
+        return User::factory()->create([
             'school_id' => $school->id,
             'role_id' => $roleId,
         ]);
-
-        return $user;
     }
 }

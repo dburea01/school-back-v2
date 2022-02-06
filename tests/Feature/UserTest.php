@@ -52,8 +52,8 @@ class UserTest extends TestCase
     public function test_get_users_of_a_school_filtered_by_last_name()
     {
         $school = School::factory()->create();
-        $userA = User::factory()->create(['school_id' => $school->id, 'role_id' => 'TEACHER', 'last_name' => 'userA']);
-        $userB = User::factory()->create(['school_id' => $school->id, 'role_id' => 'TEACHER', 'last_name' => 'userB']);
+        User::factory()->create(['school_id' => $school->id, 'role_id' => 'TEACHER', 'last_name' => 'userA']);
+        User::factory()->create(['school_id' => $school->id, 'role_id' => 'TEACHER', 'last_name' => 'userB']);
 
         $response = $this->getJson($this->getEndPoint() . "schools/$school->id/users?sort=last_name");
 
@@ -104,7 +104,7 @@ class UserTest extends TestCase
     public function test_get_user_not_belonging_to_school_must_return_404()
     {
         $schoolA = School::factory()->create();
-        $userA = User::factory()->create(['school_id' => $schoolA->id]);
+        User::factory()->create(['school_id' => $schoolA->id]);
 
         $schoolB = School::factory()->create();
         $userB = User::factory()->create(['school_id' => $schoolB->id]);

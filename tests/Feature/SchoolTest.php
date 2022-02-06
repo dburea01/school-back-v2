@@ -11,7 +11,6 @@ class SchoolTest extends TestCase
 {
     use RefreshDatabase;
     use Request;
-    //use WithoutMiddleware;
 
     const RESOURCE = 'schools';
 

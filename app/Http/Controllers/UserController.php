@@ -32,7 +32,7 @@ class UserController extends Controller
 
             return new UserResource($user);
         } catch (\Throwable $th) {
-            return response()->json('bad request :' . $th->getMessage(), 400);
+            return response()->json($th->getMessage(), 400);
         }
     }
 
@@ -48,7 +48,7 @@ class UserController extends Controller
 
             return new UserResource($userUpdated);
         } catch (\Throwable $th) {
-            return response()->json('bad request :' . $th->getMessage(), 400);
+            return response()->json($th->getMessage(), 400);
         }
     }
 
@@ -59,7 +59,7 @@ class UserController extends Controller
 
             return response()->noContent();
         } catch (\Throwable $th) {
-            return response()->json('bad request :' . $th->getMessage(), 400);
+            return response()->json($th->getMessage(), 400);
         }
     }
 }

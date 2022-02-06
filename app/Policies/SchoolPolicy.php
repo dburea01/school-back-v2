@@ -46,7 +46,7 @@ class SchoolPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user)
+    public function create()
     {
         //
     }
@@ -70,7 +70,7 @@ class SchoolPolicy
      * @param  \App\Models\School  $school
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, School $school)
+    public function delete()
     {
         // 
     }
@@ -82,7 +82,7 @@ class SchoolPolicy
      * @param  \App\Models\School  $school
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, School $school)
+    public function restore()
     {
         //
     }
@@ -94,7 +94,7 @@ class SchoolPolicy
      * @param  \App\Models\School  $school
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, School $school)
+    public function forceDelete()
     {
         //
     }
