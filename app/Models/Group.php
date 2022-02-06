@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class School extends Model
+class Group extends Model
 {
     use HasFactory, HasUuid;
 
@@ -15,6 +15,7 @@ class School extends Model
 
     protected $fillable =
     [
+        'school_id',
         'name',
         'address1',
         'address2',
@@ -22,23 +23,12 @@ class School extends Model
         'zip_code',
         'city',
         'country_id',
-        'max_users',
         'comment',
         'status',
     ];
 
-    public function setCountryIdAttribute($value)
+    public function school()
     {
-        $this->attributes['country_id'] = strtoupper($value);
-    }
-
-    public function users()
-    {
-        return $this->hasMany(User::class);
-    }
-
-    public function groups()
-    {
-        return $this->hasMany(Group::class);
+        return $this->belongsTo(School::class);
     }
 }
