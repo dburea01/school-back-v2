@@ -27,6 +27,11 @@ class Group extends Model
         'status',
     ];
 
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = strtoupper($value);
+    }
+
     public function school()
     {
         return $this->belongsTo(School::class);

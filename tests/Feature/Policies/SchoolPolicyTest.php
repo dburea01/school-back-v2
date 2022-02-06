@@ -3,11 +3,13 @@
 namespace tests\Feature\Policies;
 
 use App\Models\School;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Tests\Feature\Request;
 
 class SchoolPolicyTest extends TestCase
 {
+    use RefreshDatabase;
     use Request;
 
     public function test_only_the_superadmin_can_see_the_schools()
