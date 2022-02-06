@@ -156,6 +156,17 @@ class UserTest extends TestCase
         $this->assertUserBdd($userCreated, $data);
     }
 
+    public function test_cannot_create_more_users_than_the_maximum_for_the_school()
+    {
+        $maxUsers = 5;
+
+        $school = School::factory()->create(['max_users' => $maxUsers]);
+        User::factory()->count($maxUsers)->create(['school_id' => $school->id,]);
+        $response = $this->postJson($this->getEndPoint() . "schools/$school->id/users");
+        $response->assertStatus(422)
+            ->assertInvalid(['max_users']);
+    }
+
     public function test_put_user_without_errors_must_return_201_and_the_user_is_updated()
     {
         $school = School::factory()->create();

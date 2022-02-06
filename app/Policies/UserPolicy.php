@@ -42,7 +42,7 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-        return ($user->isDirector || $user->isTeacher) && $user->school_id === $model->school_id && $user->school_id === $this->school->id;
+        return ($user->isDirector() || $user->isTeacher()) && $user->school_id === $model->school_id && $user->school_id === $this->school->id;
     }
 
     /**
@@ -53,7 +53,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return ($user->isDirector) && $user->school_id === $this->school->id;
+        return ($user->isDirector()) && $user->school_id === $this->school->id;
     }
 
     /**
@@ -65,7 +65,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        return ($user->isDirector) && $user->school_id === $model->school_id;
+        return ($user->isDirector()) && $user->school_id === $model->school_id;
     }
 
     /**
@@ -77,7 +77,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        return ($user->isDirector) && $user->school_id === $model->school_id;
+        return ($user->isDirector()) && $user->school_id === $model->school_id;
     }
 
     /**
