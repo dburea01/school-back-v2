@@ -18,6 +18,9 @@ class SchoolController extends Controller
         $this->authorizeResource(School::class);
     }
 
+
+
+
     public function index()
     {
         $schools = $this->schoolRepository->index();
