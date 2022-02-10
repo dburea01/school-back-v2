@@ -2,8 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Group;
+use App\Models\GroupUser;
 use App\Models\School;
 use App\Models\User;
+use App\Models\UserGroup;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -37,14 +40,34 @@ class UserSeeder extends Seeder
                 'role_id' => 'TEACHER',
             ]);
 
-            User::factory()->count(10)->create([
-                'school_id' => $school->id,
-                'role_id' => 'PARENT',
-            ]);
+            // create groups and users of groups
+            $groups = Group::factory()->count(10)->create(['school_id' => $school->id]);
 
-            User::factory()->count(20)->create([
-                'school_id' => $school->id,
-                'role_id' => 'STUDENT',
+            foreach ($groups as $group) {
+                $parents = User::factory()->count(random_int(1, 3))->create([
+                    'school_id' => $school->id,
+                    'role_id' => 'PARENT',
+                    'last_name' => $group->name
+                ]);
+
+                $students = User::factory()->count(random_int(2, 3))->create([
+                    'school_id' => $school->id,
+                    'role_id' => 'STUDENT',
+                    'last_name' => $group->name
+                ]);
+
+                $this->createUserGroup($group, $parents);
+                $this->createUserGroup($group, $students);
+            }
+        }
+    }
+
+    public function createUserGroup(Group $group, $users)
+    {
+        foreach ($users as $user) {
+            UserGroup::factory()->create([
+                'group_id' => $group->id,
+                'user_id' => $user->id
             ]);
         }
     }

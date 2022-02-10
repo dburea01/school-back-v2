@@ -12,7 +12,7 @@ class GroupFactory extends Factory
     public function definition()
     {
         return [
-            'name' => 'Group ' . $this->faker->word,
+            'name' => $this->faker->lastName(),
             'address1' => $this->faker->streetAddress(),
             'zip_code' => $this->faker->postcode,
             'city' => $this->faker->city,
