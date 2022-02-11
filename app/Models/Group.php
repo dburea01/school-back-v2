@@ -36,4 +36,9 @@ class Group extends Model
     {
         return $this->belongsTo(School::class);
     }
+
+    public function userGroups()
+    {
+        return $this->hasMany(UserGroup::class);
+    }
 }
