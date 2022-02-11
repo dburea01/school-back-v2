@@ -2,7 +2,10 @@
 
 namespace App\Http\Resources;
 
+use App\Models\User;
+use App\Models\UserGroup;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Log;
 
 class GroupResource extends JsonResource
 {
@@ -14,6 +17,8 @@ class GroupResource extends JsonResource
      */
     public function toArray($request)
     {
+        $users = User::whereIn('id', UserGroup::where('group_id', $this->id)->pluck('user_id'))->get();
+
         return [
             'id' => $this->id,
             'school_id' => $this->school_id,
@@ -27,6 +32,7 @@ class GroupResource extends JsonResource
             'city' => $this->city,
             'status' => $this->status,
             'comment' => $this->comment,
+            'users' => UserWithRoleResource::collection($users)
         ];
     }
 }
