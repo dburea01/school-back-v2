@@ -54,11 +54,11 @@ class UserGroupPolicyTest extends TestCase
     {
         $school1 = School::factory()->create();
         $group1 = Group::factory()->create(['school_id' => $school1->id]);
-        $user1 = User::factory()->create(['school_id' => $school1->id]);
-        $director1 = User::factory()->create(['school_id' => $school1->id, 'role_id' => 'DIRECTOR']);
+        User::factory()->create(['school_id' => $school1->id]);
+        User::factory()->create(['school_id' => $school1->id, 'role_id' => 'DIRECTOR']);
 
         $school2 = School::factory()->create();
-        $group2 = Group::factory()->create(['school_id' => $school2->id]);
+        Group::factory()->create(['school_id' => $school2->id]);
         $user2 = User::factory()->create(['school_id' => $school2->id]);
         $director2 = User::factory()->create(['school_id' => $school2->id, 'role_id' => 'DIRECTOR']);
 
@@ -72,11 +72,11 @@ class UserGroupPolicyTest extends TestCase
         $school1 = School::factory()->create();
         $group1 = Group::factory()->create(['school_id' => $school1->id]);
         $user1 = User::factory()->create(['school_id' => $school1->id]);
-        $director1 = User::factory()->create(['school_id' => $school1->id, 'role_id' => 'DIRECTOR']);
+        User::factory()->create(['school_id' => $school1->id, 'role_id' => 'DIRECTOR']);
         $userGroup1 = UserGroup::factory()->create(['group_id' => $group1->id, 'user_id' => $user1->id]);
 
         $school2 = School::factory()->create();
-        $group2 = Group::factory()->create(['school_id' => $school2->id]);
+        Group::factory()->create(['school_id' => $school2->id]);
         $user2 = User::factory()->create(['school_id' => $school2->id]);
         $director2 = User::factory()->create(['school_id' => $school2->id, 'role_id' => 'DIRECTOR']);
 

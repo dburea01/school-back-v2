@@ -39,7 +39,7 @@ class UserGroupPolicy
 
 
 
-    public function delete(User $user, UserGroup $userGroup)
+    public function delete(User $user)
     {
         return
             $user->isDirector()
