@@ -14,7 +14,6 @@ class School extends Model
     protected $keyType = 'string';
 
     protected $fillable =
-
     [
 
         'name',
