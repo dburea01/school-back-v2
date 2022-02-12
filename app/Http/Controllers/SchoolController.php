@@ -20,7 +20,41 @@ class SchoolController extends Controller
 
 
 
-
+    /**
+     * @OA\Get(
+     *     path="/schools",
+     *     operationId="getSchoolsList",
+     *     tags={"Schools"},
+     *     summary="Get list of schools",
+     *     description="Returns list of schools.",
+     *     @OA\Parameter(
+     *         name="name",
+     *         in="query",
+     *         description="filter by school name",
+     *         required=false
+     *     ),
+     *     @OA\Parameter(
+     *         name="city",
+     *         in="query",
+     *         description="filter by school city",
+     *         required=false
+     *     ),
+     *     @OA\Parameter(
+     *         name="sort",
+     *         in="query",
+     *         description="sort by ...",
+     *         required=false
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/SchoolResource")
+     *     ),
+     *     @OA\Response(response=400, description="Bad Request"),
+     *     @OA\Response(response=401, description="Unauthenticated"),
+     *     @OA\Response(response=403, description="Forbidden")
+     * )
+     */
     public function index()
     {
         $schools = $this->schoolRepository->index();
@@ -28,6 +62,36 @@ class SchoolController extends Controller
         return SchoolResource::collection($schools);
     }
 
+    /**
+     * @OA\Post(
+     *      path="/schools",
+     *      operationId="storeSchool",
+     *      tags={"Schools"},
+     *      summary="Store new school",
+     *      description="Returns school data",
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(ref="#/components/schemas/StoreSchoolRequest")
+     *      ),
+     *      @OA\Response(
+     *          response=201,
+     *          description="Successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/SchoolResource")
+     *       ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     * )
+     */
     public function store(StoreSchoolRequest $request)
     {
         try {
@@ -39,11 +103,89 @@ class SchoolController extends Controller
         }
     }
 
+    /**
+     * @OA\Get(
+     *      path="/schools/{id}",
+     *      operationId="getSchoolById",
+     *      tags={"Schools"},
+     *      summary="Get school information",
+     *      description="Returns project data",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="School id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/SchoolResource")
+     *       ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     * )
+     */
     public function show(School $school)
     {
         return new SchoolResource($school);
     }
 
+    /**
+     * @OA\Put(
+     *      path="/schools/{id}",
+     *      operationId="updateSchool",
+     *      tags={"Schools"},
+     *      summary="Update existing school",
+     *      description="Returns updated school data",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="School id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(ref="#/components/schemas/StoreSchoolRequest")
+     *      ),
+     *      @OA\Response(
+     *          response=202,
+     *          description="Successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/SchoolResource")
+     *       ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *      )
+     * )
+     */
     public function update(UpdateSchoolRequest $request, School $school)
     {
         try {
@@ -55,6 +197,41 @@ class SchoolController extends Controller
         }
     }
 
+    /**
+     * @OA\Delete(
+     *      path="/schools/{id}",
+     *      operationId="deleteSchool",
+     *      tags={"Schools"},
+     *      summary="Delete existing school",
+     *      description="Deletes a school and returns no content",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="School id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=204,
+     *          description="Successful operation",
+     *          @OA\JsonContent()
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *      )
+     * )
+     */
     public function destroy(School $school)
     {
         try {

@@ -129,7 +129,7 @@ class SchoolModel
     /**
      * @OA\Property(
      *     title="count_users",
-     *     description="The quantity of users of the school (if the connected user is admin).",
+     *     description="The quantity of users of the school.",
      *     example=45
      * )
      *

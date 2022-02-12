@@ -11,14 +11,10 @@ use Illuminate\Routing\Controller as BaseController;
 /**
  * @OA\Info(
  *      version="1.0.0",
- *      title="Laravel OpenApi Demo Documentation",
- *      description="L5 Swagger OpenApi description",
+ *      title="LaraSchool API Documentation",
+ *      description="You will find here all the necessary documentation to consume the APIs. Remind : you must be connected to use these APIs.",
  *      @OA\Contact(
- *          email="admin@admin.com"
- *      ),
- *      @OA\License(
- *          name="Apache 2.0",
- *          url="http://www.apache.org/licenses/LICENSE-2.0.html"
+ *          email="dominique.bureau@free.fr"
  *      )
  * )
  *
@@ -26,11 +22,18 @@ use Illuminate\Routing\Controller as BaseController;
  *      url=L5_SWAGGER_CONST_HOST,
  *      description="Demo API Server"
  * )
-
  *
+ *
+ * @OA\Tag(name="Schools")
+ * 
  * @OA\Tag(
- *     name="Projects",
- *     description="API Endpoints of Projects"
+ *     name="Users",
+ *     description="API Endpoints of Users"
+ * )
+ * 
+ * @OA\Tag(
+ *     name="Groups",
+ *     description="API Endpoints of Groups"
  * )
  */
 
