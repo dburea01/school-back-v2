@@ -18,8 +18,6 @@ class SchoolController extends Controller
         $this->authorizeResource(School::class);
     }
 
-
-
     /**
      * @OA\Get(
      *     path="/schools",
