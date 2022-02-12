@@ -1,0 +1,467 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "LaraSchool API Documentation",
+        "description": "You will find here all the necessary documentation to consume the APIs. Remind : you must be connected to use these APIs.",
+        "contact": {
+            "email": "dominique.bureau@free.fr"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost/api/v1",
+            "description": "Demo API Server"
+        }
+    ],
+    "paths": {
+        "/schools": {
+            "get": {
+                "tags": [
+                    "Schools"
+                ],
+                "summary": "Get list of schools",
+                "description": "Returns list of schools.",
+                "operationId": "getSchoolsList",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "filter by school name",
+                        "required": false
+                    },
+                    {
+                        "name": "city",
+                        "in": "query",
+                        "description": "filter by school city",
+                        "required": false
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "sort by ...",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SchoolResource"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Schools"
+                ],
+                "summary": "Store new school",
+                "description": "Returns school data",
+                "operationId": "storeSchool",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreSchoolRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SchoolResource"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/schools/{id}": {
+            "get": {
+                "tags": [
+                    "Schools"
+                ],
+                "summary": "Get school information",
+                "description": "Returns project data",
+                "operationId": "getSchoolById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "School id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SchoolResource"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Schools"
+                ],
+                "summary": "Update existing school",
+                "description": "Returns updated school data",
+                "operationId": "updateSchool",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "School id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreSchoolRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SchoolResource"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Schools"
+                ],
+                "summary": "Delete existing school",
+                "description": "Deletes a school and returns no content",
+                "operationId": "deleteSchool",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "School id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "SchoolModel": {
+                "title": "School",
+                "description": "School model",
+                "properties": {
+                    "id": {
+                        "title": "id",
+                        "description": "id of the school",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "08e2139d-79b7-4518-a5a5-73ecc161c4bb"
+                    },
+                    "name": {
+                        "title": "name",
+                        "description": "Name of the school",
+                        "type": "string",
+                        "example": "Lycée Sainte Marie"
+                    },
+                    "city": {
+                        "title": "city",
+                        "description": "City of the school",
+                        "type": "string",
+                        "example": "BEAUCAMPS LIGNY"
+                    },
+                    "address1": {
+                        "title": "address1",
+                        "description": "Line 1 address of the school",
+                        "type": "string",
+                        "example": "5 rue de la gare"
+                    },
+                    "address2": {
+                        "title": "address2",
+                        "description": "Line 2 address of the school",
+                        "type": "string"
+                    },
+                    "address3": {
+                        "title": "address3",
+                        "description": "Line 3 address of the school",
+                        "type": "string"
+                    },
+                    "country_id": {
+                        "title": "country_id",
+                        "description": "Country id of the school",
+                        "type": "string",
+                        "example": "FR"
+                    },
+                    "school_type_id": {
+                        "title": "school_type_id",
+                        "description": "Type the school",
+                        "type": "string",
+                        "enum": [
+                            "LYCEE",
+                            "COLLEGE",
+                            "PRIMAIRE",
+                            "MATERNELLE"
+                        ],
+                        "example": "LYCEE"
+                    },
+                    "school_status": {
+                        "title": "school_status",
+                        "description": "Status of the school.",
+                        "type": "string",
+                        "enum": [
+                            "ACTIVE",
+                            "INACTIVE"
+                        ],
+                        "example": "ACTIVE"
+                    },
+                    "max_users": {
+                        "title": "max_users",
+                        "description": "The max users the school can have.",
+                        "type": "integer",
+                        "example": 123
+                    },
+                    "count_users": {
+                        "title": "count_users",
+                        "description": "The quantity of users of the school.",
+                        "type": "integer",
+                        "example": 45
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "School"
+                }
+            },
+            "SchoolResource": {
+                "title": "SchoolResource",
+                "description": "School resource",
+                "properties": {
+                    "data": {
+                        "title": "data",
+                        "description": "Data wrapper",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SchoolModel"
+                        }
+                    },
+                    "links": {
+                        "title": "links",
+                        "description": "Pagination links"
+                    },
+                    "meta": {
+                        "title": "meta",
+                        "description": "Meta informations"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "SchoolResource"
+                }
+            },
+            "StoreSchoolRequest": {
+                "title": "StoreSchoolRequest",
+                "description": "Store School request body data",
+                "required": [
+                    "name",
+                    "zip_code",
+                    "city",
+                    "country_id",
+                    "school_type_id",
+                    "school_status",
+                    "max_users"
+                ],
+                "properties": {
+                    "name": {
+                        "title": "name",
+                        "description": "Name of the new school",
+                        "type": "string",
+                        "format": "string",
+                        "example": "Lycée Sainte Marie"
+                    },
+                    "zip_code": {
+                        "title": "zip_code",
+                        "description": "zip code of the new school",
+                        "type": "string",
+                        "format": "string",
+                        "example": "59320"
+                    },
+                    "city": {
+                        "title": "city",
+                        "description": "city of the new school",
+                        "type": "string",
+                        "format": "string",
+                        "example": "Beaucamps Ligny"
+                    },
+                    "country_id": {
+                        "title": "country_id",
+                        "description": "country id of the new school",
+                        "type": "string",
+                        "format": "string",
+                        "example": "FR"
+                    },
+                    "address1": {
+                        "title": "address1",
+                        "description": "Line 1 address of the new school",
+                        "type": "string",
+                        "format": "string",
+                        "example": "5 rue de la gare"
+                    },
+                    "address2": {
+                        "title": "addressé",
+                        "description": "Line 2 address of the new school",
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "address3": {
+                        "title": "address3",
+                        "description": "Line 3 address of the new school",
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "school_type_id": {
+                        "title": "school_type_id",
+                        "description": "type of the new school",
+                        "type": "string",
+                        "format": "string",
+                        "enum": [
+                            "LYCEE",
+                            "COLLEGE",
+                            "PRIMAIRE",
+                            "MATERNELLE"
+                        ],
+                        "example": "LYCEE"
+                    },
+                    "school_status": {
+                        "title": "school_status",
+                        "description": "status of the new school. Available value : ACTIVE | INACTIVE. If INACTIVE, the school is not usable by any user.",
+                        "type": "string",
+                        "format": "string",
+                        "enum": [
+                            "ACTIVE",
+                            "INACTIVE"
+                        ],
+                        "example": "ACTIVE"
+                    },
+                    "max_users": {
+                        "title": "max_users",
+                        "description": "Max users of the new school",
+                        "type": "string",
+                        "format": "int",
+                        "example": 123
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Schools"
+        },
+        {
+            "name": "Users",
+            "description": "API Endpoints of Users"
+        },
+        {
+            "name": "Groups",
+            "description": "API Endpoints of Groups"
+        }
+    ],
+    "security": [
+        []
+    ]
+}
